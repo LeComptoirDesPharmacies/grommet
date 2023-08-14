@@ -60,6 +60,7 @@ const DropContainer = forwardRef(
       [portalContext, portalId],
     );
     const dropRef = useForwardedRef(ref);
+    const target = dropTarget?.current || dropTarget;
 
     useEffect(() => {
       const onClickDocument = (event) => {
@@ -110,7 +111,6 @@ const DropContainer = forwardRef(
       const place = (preserveHeight) => {
         const windowWidth = window.innerWidth;
         const windowHeight = window.innerHeight;
-        const target = dropTarget?.current || dropTarget;
         const container = dropRef.current;
         if (container && target) {
           // clear prior styling
@@ -163,10 +163,10 @@ const DropContainer = forwardRef(
           let bottom;
           let maxHeight = containerRect.height;
 
-          /* If responsive is true and the Drop doesn't have enough room 
-            to be fully visible and there is more room in the other 
-            direction, change the Drop to display above/below. If there is 
-            less room in the other direction leave the Drop in its current 
+          /* If responsive is true and the Drop doesn't have enough room
+            to be fully visible and there is more room in the other
+            direction, change the Drop to display above/below. If there is
+            less room in the other direction leave the Drop in its current
             position. */
           if (
             responsive &&
@@ -233,7 +233,7 @@ const DropContainer = forwardRef(
       let scrollParents;
 
       const addScrollListeners = () => {
-        scrollParents = findScrollParents(dropTarget);
+        scrollParents = findScrollParents(target);
         scrollParents.forEach((scrollParent) =>
           scrollParent.addEventListener('scroll', place),
         );
@@ -265,7 +265,7 @@ const DropContainer = forwardRef(
       align,
       containerTarget,
       onAlign,
-      dropTarget,
+      target,
       portalContext,
       portalId,
       responsive,
